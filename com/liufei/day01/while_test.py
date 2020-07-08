@@ -53,9 +53,71 @@ while flag:
     flag = False
     print('我要这铁棒有何用')
 
-# practice 1 输出 1~100 之间的数
+# practice 1: 输出 1~100 之间的数
 
 count = 1
+# while count <= 100:
+#     print(count)
+#     count = count + 1
+
+
+# practice2 :求1~100的和
+sum = 0
 while count <= 100:
-    print(count)
+    sum = count + sum
     count = count + 1
+print(sum)
+
+# 终止循环的第二方法：break
+"""
+break：很简单，就是Python给大家提供的关键字，什么是关键字？就是python中具有一定特殊意义的单词，
+比如if，str，int等，这些不能用作变量对吧？ 
+
+那么break的用法是什么？ 即：循环中，只要遇到break马上退出循环
+"""
+flag = True
+print(111)
+while flag:
+    print('痒')
+    print('社会摇')
+    print('喜洋洋')
+    break
+    print('我要这铁棒有何用')
+print(222)
+
+# practice3 :求1~100所有的偶数
+s = 2
+while s <= 100:
+    if s % 2 == 0:
+        print(s)
+    s = s + 1
+
+# continue终止本次循环，继续下一次循环
+flag = True
+print(111)
+# while flag:
+#     print('痒')
+#     print('社会摇')
+#     print('喜洋洋')
+#     continue
+#     print('我要这铁棒有何用')
+# print(222)
+
+
+# while ... else ...
+# while 后面的else 作用是指，当while 循环正常执行完，中间没有被break 中止的话，就会执行else后面的语句
+
+count = 0
+while count <= 5:
+    count += 1
+    if count == 3:break
+    print("Loop", count)
+
+else:
+    print("循环正常执行完啦")
+print("-----out of while loop ------")
+
+
+
+
+
