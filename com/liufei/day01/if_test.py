@@ -29,6 +29,19 @@ Python的缩进有以下几个原则:
 多分支
 '''
 
+# 字符串拼接
+'''
+注意，字符串的拼接只能是双方都是字符串，不能跟数字或其它类型拼接
+'''
+name = 'liufei'
+age = '26'
+score = 12
+print(name + age)
+# 字符串和数字拼接会报错，这跟java不一样
+# print(name + score)
+
+print(3 > 4)
+
 # if...else ...可以有多个分支条件
 '''
 if 条件:
@@ -53,3 +66,19 @@ elif guess < age_of_oldboy:
     print("猜的太小了，往大里试试...")
 else:
     print("恭喜你，猜对了...")
+
+# 练习输出 1 - 100个数
+count = 1
+while True:
+    print(count)
+    count += 1
+    if count == 101:
+        break
+
+# 练习2：使用while循环求出1-100所有数的和.
+sum = 0
+count = 1
+while count <= 100:
+    sum += count
+    count += 1
+print(sum)
