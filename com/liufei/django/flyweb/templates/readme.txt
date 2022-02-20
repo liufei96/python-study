@@ -1,0 +1,3 @@
+template：html文件
+
+template文件夹就是专门放置html文件的，你们以后的web项目html文件会非常多，所以必须用单独的一个文件夹存放。

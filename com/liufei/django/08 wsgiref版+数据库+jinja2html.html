@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="test.css">
+    <link rel="icon" href="favicon.ico">
+
+</head>
+<body>
+<div>欢迎访问和软商城</div>
+<div>欢迎访问河软商城</div>
+<div>{{userinfo}}</div>
+
+<ul>
+   {% for k,v in userinfo.items()%}
+    <li>{{k}} --  {{v}}</li>
+    {%endfor%}
+</ul>
+<img src="mv.jpeg" alt="">
+<script src="test.js"></script>
+</body>
+</html>

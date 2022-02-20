@@ -25,12 +25,14 @@ python面向对象的三大特性：继承，封装，多态。
 第一步：将内容封装到某处
 '''
 
+
 # 第一步：将内容封装到某处
 
 class Foo:
     def __init__(self, name, age):
         self.name = name
         self.age = age
+
 
 # 根据类Foo创建对象
 # 自动执行Foo类的__init__
@@ -40,7 +42,6 @@ obj1 = Foo('liufei', 18)
 # 自动执行Foo类的__init__
 obj2 = Foo('alex', 73)
 
-
 '''
  self 是一个形式参数，当执行 obj1 = Foo('wupeiqi', 18 ) 时，self 等于 obj1
 
@@ -49,5 +50,350 @@ obj2 = Foo('alex', 73)
 所以，内容其实被封装到了对象 obj1 和 obj2 中，每个对象中都有 name 和 age 属性，在内存里类似于下图来保存。
 
 图略
+'''
+
+# 第二步：从某处调用被封装的内容
 
 '''
+调用被封装的内容时，有两种情况：
+
+通过对象直接调用
+通过self间接调用
+1、通过对象直接调用被封装的内容
+
+上图展示了对象 obj1 和 obj2 在内存中保存的方式，根据保存格式可以如此调用被封装的内容：对象.属性名
+'''
+
+print('第二步：从某处调用被封装的内容'.center(30, '*'))
+print('1、通过对象直接调用被封装的内容'.center(30, '*'))
+
+
+class Foo:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+
+obj1 = Foo('wupeiqi', 18)
+
+print(obj1.name)
+print(obj1.age)
+
+obj2 = Foo('alex', 73)
+print(obj2.name)
+print(obj2.age)
+
+print('2、通过self间接调用被封装的内容'.center(30, '*'))
+
+
+class Foo:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def detail(self):
+        print(self.name)
+        print(self.age)
+
+
+obj1 = Foo('wupeiqi', 18)
+obj1.detail()  # Python默认会将obj1传给self参数，即：obj1.detail(obj1)，所以，此时方法内部的 self ＝ obj1，即：self.name 是 wupeiqi ；self.age 是 18
+
+obj2 = Foo('alex', 73)
+obj2.detail()  # Python默认会将obj2传给self参数，即：obj1.detail(obj2)，所以，此时方法内部的 self ＝ obj2，即：self.name 是 alex ； self.age 是 78
+
+# 综上所述，对于面向对象的封装来说，其实就是使用构造方法将内容封装到 对象 中，然后通过对象直接或者self间接获取被封装的内容。
+
+
+# 多态
+# 多态，同一个对象，多种形态。python默认支持多态。
+print('多态，同一个对象，多种形态。python默认支持多态'.center(40, '*'))
+
+
+# def func(int a):
+#     print('a必须是数字')
+
+# 而类似于python这种弱定义类语言,a可以是任意形态（str,int,object等等）。
+def func(a):
+    print('a是什么都可以')
+
+
+# 再比如：
+class F1:
+    pass
+
+
+class S1(F1):
+    def show(self):
+        print('S1.show')
+
+
+class S2(F1):
+    def show(self):
+        print('S2.show')
+
+
+# 由于在Java或C#中定义函数参数时，必须指定参数的类型
+# 为了让Func函数既可以执行S1对象的show方法，又可以执行S2对象的show方法，所以，定义了一个S1和S2类的父类
+# 而实际传入的参数是：S1对象和S2对象
+
+def Func(obj):
+    """Func函数需要接收一个F1类型或者F1子类的类型"""
+    print(obj.show())
+
+
+s1_obj = S1()
+Func(s1_obj)  # 在Func函数中传入S1类的对象 s1_obj，执行 S1 的show方法，结果：S1.show
+
+s2_obj = S2()
+Func(s2_obj)  # 在Func函数中传入Ss类的对象 ss_obj，执行 Ss 的show方法，结果：S2.show
+
+# Python伪代码实现Java或C  # 的多态
+
+'''
+python中有一句谚语说的好，你看起来像鸭子，那么你就是鸭子。
+对于代码上的解释其实很简答：
+'''
+
+
+class A:
+    def f1(self):
+        print('in A f1')
+
+    def f2(self):
+        print('in A f2')
+
+
+class B:
+    def f1(self):
+        print('in B f1')
+
+    def f2(self):
+        print('in B f2')
+
+
+obj = A()
+obj.f1()
+obj.f2()
+
+obj2 = B()
+obj2.f1()
+obj2.f2()
+
+# A 和 B两个类完全没有耦合性，但是在某种意义上他们却统一了一个标准。
+# 对相同的功能设定了相同的名字，这样方便开发，这两个方法就可以互成为鸭子类型。
+
+# 这样的例子比比皆是：str  tuple list 都有 index方法，这就是统一了规范。
+# str bytes 等等 这就是互称为鸭子类型。
+
+# 三 类的约束
+'''
+⾸先, 你要清楚. 约束是对类的约束. 
+
+用一个例子说话：
+
+公司让小明给他们的网站完善一个支付功能，小明写了两个类，如下：
+'''
+
+
+class QQplay:
+    def pay(self, money):
+        print('使用qq支付%s元' % money)
+
+
+class AliPlay:
+    def pay(self, money):
+        print('使用阿里云支付%s元' % money)
+
+
+a = AliPlay()
+a.pay(100)
+
+b = QQplay()
+b.pay(200)
+
+
+# 但是上面这样写不太放方便，也不合理，老大说让他整改，统一一下付款的方式，小明开始加班整理：
+
+def pay(obj, money):
+    obj.pay(money)
+
+
+a = AliPlay()
+b = QQplay()
+
+pay(a, 100)
+pay(a, 200)
+
+
+# 写了半年的接口，小明终于接了大项目了，结果公司没品位，招了一个野生的程序员春哥接替小明的工作，老大给春哥安排了任务，让他写一个微信支付的功能：
+
+class WechatPay:
+    def fuqian(self, money):
+        print('使用微信支付%s元' % money)
+
+
+def pay(obj, money):
+    obj.pay(money)
+
+
+a = AliPlay()
+b = QQplay()
+
+pay(a, 100)
+pay(b, 200)
+
+c = WechatPay()
+c.fuqian(300)
+
+
+# 结果春哥，受惩罚了，限期整改，那么春哥，发奋图强，看了太白教你学python的相关资料，重新梳理的代码：
+
+class Payment:
+    """ 此类什么都不做，就是制定一个标准，谁继承我，必须定义我里面的方法。"""
+
+    def pay(self, money): pass
+
+
+class QQpay(Payment):
+    def pay(self, money):
+        print('使用qq支付%s元' % money)
+
+
+class Alipay(Payment):
+    def pay(self, money):
+        print('使用阿里支付%s元' % money)
+
+
+class Wechatpay(Payment):
+    def fuqian(self, money):
+        print('使用微信支付%s元' % money)
+
+
+def pay(obj, money):
+    obj.pay(money)
+
+
+a = AliPlay()
+b = QQplay()
+
+pay(a, 100)
+pay(b, 200)
+
+c = Wechatpay()
+c.fuqian(300)
+
+# 但是，这样还会有问题，如果再来野生程序员，他不看其他的支付方式，也不知道为什么继承的类中要定义一个没有意义的方法，所以他会是会我行我素：
+'''
+所以此时我们要用到对类的约束，对类的约束有两种：
+
+1. 提取⽗类. 然后在⽗类中定义好⽅法. 在这个⽅法中什么都不⽤⼲. 就抛⼀个异常就可以了. 这样所有的⼦类都必须重写这个⽅法. 否则. 访问的时候就会报错. 
+
+2. 使⽤元类来描述⽗类. 在元类中给出⼀个抽象⽅法. 这样⼦类就不得不给出抽象⽅法的具体实现. 也可以起到约束的效果.
+'''
+
+
+# 先用第一种方式解决：
+class Payment:
+    '''
+    此类什么都不做，就是制定一个标准，谁继承我，必须定义我里面的方法。
+    '''
+
+    def pay(self, name):
+        raise Exception('你没有实现pay方法')
+
+
+# 第二种方式：引入抽象类的概念处理。
+
+from abc import ABCMeta, abstractmethod
+
+
+class Payment(metaclass=ABCMeta):  # 抽象类 接口类  规范和约束  metaclass指定的是一个元类
+    @abstractmethod
+    def pay(self): pass  # 抽象方法
+
+
+class Wechatpay(Payment):
+    # def pay(self,money):
+    #     print('使用微信支付了%s元'%money)
+    def recharge(self): pass
+
+
+a = Alipay()
+a.pay(100)
+pay(a, 100)  # 归一化设计：不管是哪一个类的对象，都调用同一个函数去完成相似的功能
+q = QQpay()
+q.pay(100)
+pay(q, 100)
+# w = Wechatpay()
+# pay(w, 100)  # 到用的时候才会报错
+
+'''
+# 抽象类和接口类做的事情 ：建立规范
+# 制定一个类的metaclass是ABCMeta，
+# 那么这个类就变成了一个抽象类(接口类)
+# 这个类的主要功能就是建立一个规范
+'''
+
+'''
+总结: 约束. 其实就是⽗类对⼦类进⾏约束. ⼦类必须要写xxx⽅法. 在python中约束的⽅式和⽅法有两种:
+
+1. 使⽤抽象类和抽象⽅法, 由于该⽅案来源是java和c#. 所以使⽤频率还是很少的
+
+2. 使⽤⼈为抛出异常的⽅案. 并且尽量抛出的是NotImplementError. 这样比较专业, ⽽且错误比较明确.(推荐)
+'''
+
+# 四. super()深入了解
+# super是严格按照类的继承顺序执行的！
+print('super是严格按照类的继承顺序执行的！'.center(30, '*'))
+
+
+class A:
+    def f1(self):
+        print('in A f1')
+
+    def f2(self):
+        print('in A f2')
+
+
+class Foo(A):
+    def f1(self):
+        super().f2()
+        print('in A foo')
+
+
+obj = Foo()
+obj.f1()
+
+print('super()严格按照类的mro顺序执行'.center(30, '*'))
+
+
+class A:
+    def f1(self):
+        print('in A')
+
+class Foo(A):
+    def f1(self):
+        super().f1()
+        print('in Foo')
+
+class Bar(A):
+    def f1(self):
+        print('in Bar')
+
+class Info(Foo,Bar):
+    def f1(self):
+        super().f1()
+        print('in Info f1')
+
+obj = Info()
+obj.f1()
+
+
+'''
+in Bar
+in Foo
+in Info f1
+'''
+
+print(Info.mro())  # [<class '__main__.Info'>, <class '__main__.Foo'>, <class '__main__.Bar'>, <class '__main__.A'>, <class 'object'>]
